@@ -1,24 +1,71 @@
 'use strict'
 
 const db = require('../server/db')
-const {User} = require('../server/db/models')
+const {User, Product, Order, OrderItem} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
 
-  const users = await Promise.all([
-    User.create({email: 'cody@email.com', password: '123'}),
-    User.create({email: 'murphy@email.com', password: '123'})
+  const [shortBoard, longBoard, foamy] = await Promise.all([
+    Product.create({
+      name: 'shortBoard',
+      imageUrl:
+        'https://www.aotearoasurf.co.nz/wp-content/uploads/2017/10/BIC-6-7-Shortboard.jpg',
+      stock: 5,
+      price: 299
+    }),
+    Product.create({
+      name: 'longBoard',
+      imageUrl:
+        'https://www.ronjonsurfshop.com/assets/item/alternate/large/10690064001D--rj_8_pintail_longboard_1208.jpg',
+      stock: 5,
+      price: 350
+    }),
+    Product.create({
+      name: 'foamy',
+      imageUrl:
+        'https://media.decathlon.my/1749164/100-foam-surfboard-7-supplied-with-leash-and-fins.jpg',
+      stock: 5,
+      price: 99
+    })
   ])
 
-  console.log(`seeded ${users.length} users`)
-  console.log(`seeded successfully`)
+  const [user1, user2, user3] = await Promise.all([
+    User.create({
+      userName: 'user1',
+      email: 'test@gmail.com',
+      password: '123'
+    }),
+    User.create({
+      userName: 'user2',
+      email: 'test2@gmail.com',
+      password: '1234'
+    }),
+    User.create({
+      userName: 'user3',
+      email: 'test3@gmail.com',
+      password: '12345'
+    })
+  ])
+
+  const [order1, order2, order3] = await Promise.all([
+    Order.create({
+      status: 'processing',
+      userId: 1
+    }),
+    Order.create({
+      status: 'cart',
+      userId: 2
+    }),
+    Order.create({
+      status: 'cart',
+      userId: 3
+    })
+  ])
+  console.log('Seeding successfull!')
 }
 
-// We've separated the `seed` function from the `runSeed` function.
-// This way we can isolate the error handling and exit trapping.
-// The `seed` function is concerned only with modifying the database.
 async function runSeed() {
   console.log('seeding...')
   try {
@@ -33,12 +80,8 @@ async function runSeed() {
   }
 }
 
-// Execute the `seed` function, IF we ran this module directly (`node seed`).
-// `Async` functions always return a promise, so we can use `catch` to handle
-// any errors that might occur inside of `seed`.
 if (module === require.main) {
   runSeed()
 }
 
-// we export the seed function for testing purposes (see `./seed.spec.js`)
 module.exports = seed

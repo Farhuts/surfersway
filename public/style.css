@@ -10,12 +10,36 @@ label {
   display: block;
 }
 
+nav {
+  background-color: #20033c85;
+  margin-top: -1%;
+  border-bottom-left-radius: 50px;
+  border-bottom-right-radius: 50px;
+}
+
 nav a {
   display: inline-block;
-  margin: 1em;
+  margin-right: 1em;
+}
+
+nav a.brand-logo {
+  display: inline-block;
+  margin: 0;
 }
 
 form div {
   margin: 1em;
   display: inline-block;
+}
+
+hr {
+  border: 1px solid white;
+}
+
+img {
+  float: left;
+}
+
+a {
+  color: black;
 }
