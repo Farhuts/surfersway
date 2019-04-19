@@ -13,7 +13,7 @@ router.get('/myCart', async (req, res, next) => {
     })
     let userItemInCart = await OrderItem.findAll({
       where: {orderId: userOrder.id},
-      order: [['createdAt', 'DESC']]
+      order: [['createdAt', 'ASC']]
     })
     let userCart = {userOrder, userItemInCart}
     res.json(userCart)

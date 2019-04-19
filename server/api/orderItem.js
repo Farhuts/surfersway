@@ -41,8 +41,9 @@ router.put('/quantity', async (req, res, next) => {
   try {
     const productId = req.body.productId
     const quantity = req.body.quantity
+    const subTotal = req.body.subTotal
 
-    console.log(req.body)
+    console.log(req.body.subTotal)
 
     let oldQuantity = await OrderItem.findOne({
       where: {productId}
@@ -50,11 +51,28 @@ router.put('/quantity', async (req, res, next) => {
 
     let updateQTYItem = await oldQuantity.update({
       productId: productId,
-      quantity: quantity
+      quantity: quantity,
+      subTotal: subTotal
     })
-    console.log(updateQTYItem.quantity)
+    console.log(updateQTYItem.subTotal)
 
     res.json(updateQTYItem)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.put('/remove', async (req, res, next) => {
+  try {
+    const orderId = req.body.orderId
+    const productId = req.body.productId
+
+    console.log(req.body)
+
+    await OrderItem.destroy({
+      where: {orderId, productId}
+    })
+    res.json({}).end()
   } catch (err) {
     next(err)
   }

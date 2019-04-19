@@ -1,5 +1,10 @@
 import React, {Component} from 'react'
-import {getCartThunk, changeQtyItemThunk} from '../store/orderStore'
+import ComponentForCart from './componentForCart'
+import {
+  getCartThunk,
+  changeQtyItemThunk,
+  removeItemThunk
+} from '../store/orderStore'
 import {connect} from 'react-redux'
 
 class Cart extends Component {
@@ -7,61 +12,50 @@ class Cart extends Component {
     super(props)
     this.getProductInfo = this.getProductInfo.bind(this)
     this.changeQuantity = this.changeQuantity.bind(this)
+    this.deleteItem = this.deleteItem.bind(this)
   }
+
   componentDidMount() {
     this.props.getCartThunkDispatch()
   }
+
   getProductInfo(productId) {
     return this.props.orders.myCart.userOrder.products.filter(x => {
       return x.id === productId
     })
   }
 
-  async changeQuantity(productId, quantity) {
-    await this.props.changeQtyItemThunkDispatch(productId, quantity)
+  async changeQuantity(productId, quantity, subTotal) {
+    await this.props.changeQtyItemThunkDispatch(productId, quantity, subTotal)
     this.props.getCartThunkDispatch()
   }
 
-  render() {
-    let ordersInCart = this.props.orders.myCart.userItemInCart
-    const productDescription = this.props.orders.myCart.userOrder
+  async deleteItem(orderId, productId) {
+    console.log('start props ', orderId, productId)
+    await this.props.removeItemThunkDispatch(orderId, productId)
+    await this.props.getCartThunkDispatch()
 
-    let orderDetails =
-      ordersInCart &&
-      ordersInCart.map(item => {
-        let product = this.getProductInfo(item.productId)[0]
-        let productId = product.id
-        let quantity = item.quantity
-        return (
-          <div className="container" key={item.productId}>
-            <p>
-              Name {product.name}, QTY:{' '}
-              <button
-                type="submit"
-                onClick={() => this.changeQuantity(productId, (quantity -= 1))}
-              >
-                {' '}
-                -{' '}
-              </button>{' '}
-              {item.quantity}{' '}
-              <button
-                type="submit"
-                onClick={() => this.changeQuantity(productId, (quantity += 1))}
-              >
-                {' '}
-                +{' '}
-              </button>{' '}
-              Price ${item.price} - subTotal {item.subTotal}
-            </p>
-            <hr className="cart" />
-          </div>
-        )
-      })
+    // let newTotal = this.props.cart.currentOrder.total - quantity * price
+    // let updateInfo = {total: newTotal, orderId}
+    // this.props.setTotalSub(updateInfo)
+    // console.log('end props ', this.props)
+    // this.props.requestCart(this.props.id)
+  }
+
+  render() {
+    let myCart = {...this.props.orders.myCart}
+    let ordersInCart = myCart.userItemInCart
 
     return (
-      <div className="container">
-        <h1>Hi from Cart</h1>
-        {orderDetails}
+      <div>
+        <ComponentForCart
+          {...this.state}
+          ordersInCart={ordersInCart}
+          getProductInfo={this.getProductInfo}
+          changeQuantity={this.changeQuantity}
+          deleteItem={this.deleteItem}
+          history={this.props.history}
+        />
       </div>
     )
   }
@@ -75,8 +69,10 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
   getCartThunkDispatch: () => dispatch(getCartThunk()),
-  changeQtyItemThunkDispatch: (productId, quantity) =>
-    dispatch(changeQtyItemThunk(productId, quantity))
+  changeQtyItemThunkDispatch: (productId, subTotal, quantity) =>
+    dispatch(changeQtyItemThunk(productId, subTotal, quantity)),
+  removeItemThunkDispatch: (orderId, productId) =>
+    dispatch(removeItemThunk(orderId, productId))
 })
 
 export default connect(mapState, mapDispatch)(Cart)
