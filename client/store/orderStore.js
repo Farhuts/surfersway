@@ -1,13 +1,26 @@
 import axios from 'axios'
 
 // ACTION TYPES
-const GET_ORDER = 'GET_ORDER'
+const GET_CART = 'GET_CART'
+const POST_ORDER = 'POST_ORDER'
+const SET_TOTAL = 'SET_TOTAL'
 const ADD_ORDER_ITEM = 'ADD_ORDER_ITEM'
+const CHANGE_QTY_ITEM = 'CHANGE_QTY_ITEM'
 
 // ACTION CREATORS
-const getOrder = order => ({
-  type: GET_ORDER,
+const getCart = cart => ({
+  type: GET_CART,
+  cart
+})
+
+const postOrder = order => ({
+  type: POST_ORDER,
   order
+})
+
+const setTotal = total => ({
+  type: SET_TOTAL,
+  total
 })
 
 const addOrderItem = orderInfo => ({
@@ -15,7 +28,47 @@ const addOrderItem = orderInfo => ({
   orderInfo
 })
 
+const changeQtyItem = quantity => ({
+  type: CHANGE_QTY_ITEM,
+  quantity
+})
+
 // THUNK CREATORS
+export const getCartThunk = () => {
+  return async dispatch => {
+    try {
+      const response = await axios.get(`/api/orders/myCart`)
+      const orderInCart = response.data
+      dispatch(getCart(orderInCart))
+    } catch (err) {
+      console.error(err)
+    }
+  }
+}
+
+export const setTotalThunk = info => {
+  return async dispatch => {
+    try {
+      const response = await axios.put('/api/orders/updateTotal', info)
+      const updatedTotal = response.data
+      dispatch(setTotal(updatedTotal))
+    } catch (err) {
+      console.log(err)
+    }
+  }
+}
+
+export const postOrderThunk = id => {
+  return async dispatch => {
+    try {
+      const response = await axios.post('/api/orders', id)
+      dispatch(postOrder(response.data))
+    } catch (err) {
+      console.error(err)
+    }
+  }
+}
+
 export const addItemToOrderThunk = orderInfo => {
   return async dispatch => {
     try {
@@ -28,26 +81,38 @@ export const addItemToOrderThunk = orderInfo => {
   }
 }
 
-export const getOrderThunk = id => {
+export const changeQtyItemThunk = (productId, quantity) => {
   return async dispatch => {
     try {
-      const response = await axios.post(`/api/users/order`, {userId: id})
-      console.log('USER ID', id)
-      dispatch(getOrder(response.data))
+      const response = await axios.put('/api/orderItem/quantity', {
+        productId,
+        quantity
+      })
+      const orderItem = response.data
+      dispatch(changeQtyItem(orderItem))
     } catch (err) {
-      console.error(err)
+      console.log(err)
     }
   }
 }
-//
+
 // INITIAL STATE
-const initialState = {}
+const initialState = {
+  myCart: {}
+}
 
 // REDUCER
 export default function(state = initialState, action) {
   switch (action.type) {
-    case GET_ORDER:
+    case POST_ORDER:
       return action.order
+    case SET_TOTAL:
+      return action.total
+    case GET_CART:
+      return {...state, myCart: action.cart}
+    case CHANGE_QTY_ITEM:
+      console.log(state.myCart.userOrder)
+      return {...state, myCart: action.quantity}
     default:
       return state
   }
