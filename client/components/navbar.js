@@ -10,7 +10,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
       <div className="nav-wraper">
         <div className="container">
           <ul className="orders" className="right">
-            <Link to="/orders">Cart</Link>
+            <Link to="/orders/myCart">Cart</Link>
           </ul>
           <Link to="/home" className="brand-logo">
             Surf

@@ -1,14 +1,18 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {getOneProductThunk} from '../store/productStore'
-import {addItemToOrderThunk, getOrderThunk} from '../store/orderStore'
+import {
+  addItemToOrderThunk,
+  setTotalThunk,
+  postOrderThunk
+} from '../store/orderStore'
 import ForProductDetails from './forProductDetails'
 
 class ProductDetails extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      value: 1,
+      quantity: 1,
       textPopUp: ''
     }
     this.handleAddToCart = this.handleAddToCart.bind(this)
@@ -18,32 +22,31 @@ class ProductDetails extends Component {
     const productId = this.props.match.params.productId
     this.props.getOneProductThunkDispatch(productId)
     const userId = this.props.user.id
-    this.props.getOrderThunkDispatch(userId)
+    this.props.postOrderThunkDispatch(userId)
   }
 
   handleAddToCart(e) {
     e.preventDefault()
     let orderInfo = {
       productId: this.props.match.params.productId,
-      quantity: this.state.value,
+      quantity: this.state.quantity,
       price: this.props.currentProduct.price,
-      orderId: this.props.orders.currentOrder.id
+      orderId: this.props.orders.currentOrder.id,
+      subTotal: this.state.quantity * this.props.currentProduct.price
     }
-    // console.log("ORDER ITEM", this.state.value )
     this.props.addItemToOrderThunkDispatch(orderInfo)
-    let total = e.target.value * this.props.currentProduct.price
   }
 
-  handleChange(evt) {
-    console.log('in handlechange: ', evt.target.value)
+  handleChange(e) {
+    console.log('in handlechange: ', e.target.value)
     this.setState({
-      value: evt.target.value
+      quantity: e.target.value
     })
   }
 
   render() {
     const productDetails = this.props.currentProduct
-    console.log('PROPS', this.props.user)
+    console.log('ID CURR ORDER', this.props.orders.userOrder)
     return (
       <div>
         <ForProductDetails
@@ -60,6 +63,7 @@ class ProductDetails extends Component {
 
 const mapState = state => ({
   currentProduct: state.products.one_product,
+  myCart: state.myCart,
   user: state.user,
   orders: state.orders
 })
@@ -67,9 +71,9 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
   getOneProductThunkDispatch: productId =>
     dispatch(getOneProductThunk(productId)),
-  getOrderThunkDispatch: id => dispatch(getOrderThunk(id)),
   addItemToOrderThunkDispatch: orderInfo =>
-    dispatch(addItemToOrderThunk(orderInfo))
+    dispatch(addItemToOrderThunk(orderInfo)),
+  postOrderThunkDispatch: id => dispatch(postOrderThunk(id))
 })
 
 export default connect(mapState, mapDispatch)(ProductDetails)
