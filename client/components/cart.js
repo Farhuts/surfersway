@@ -5,6 +5,7 @@ import {
   changeQtyItemThunk,
   removeItemThunk
 } from '../store/orderStore'
+// import {getProductsThunk} from '../store/productStore'
 import {connect} from 'react-redux'
 
 class Cart extends Component {
@@ -25,27 +26,22 @@ class Cart extends Component {
     })
   }
 
-  async changeQuantity(productId, quantity, subTotal) {
-    await this.props.changeQtyItemThunkDispatch(productId, quantity, subTotal)
+  changeQuantity(productId, subTotal, quantity) {
+    this.props.changeQtyItemThunkDispatch(productId, subTotal, quantity)
     this.props.getCartThunkDispatch()
   }
 
-  async deleteItem(orderId, productId) {
-    console.log('start props ', orderId, productId)
-    await this.props.removeItemThunkDispatch(orderId, productId)
-    await this.props.getCartThunkDispatch()
+  deleteItem(orderId, productId) {
+    this.props.removeItemThunkDispatch(orderId, productId)
+    this.props.getCartThunkDispatch()
 
     // let newTotal = this.props.cart.currentOrder.total - quantity * price
-    // let updateInfo = {total: newTotal, orderId}
     // this.props.setTotalSub(updateInfo)
-    // console.log('end props ', this.props)
-    // this.props.requestCart(this.props.id)
   }
-
   render() {
     let myCart = {...this.props.orders.myCart}
     let ordersInCart = myCart.userItemInCart
-
+    console.log('I refreshed')
     return (
       <div>
         <ComponentForCart
@@ -54,6 +50,7 @@ class Cart extends Component {
           getProductInfo={this.getProductInfo}
           changeQuantity={this.changeQuantity}
           deleteItem={this.deleteItem}
+          handleChange={this.handleChange}
           history={this.props.history}
         />
       </div>
@@ -65,6 +62,7 @@ const mapState = state => ({
   myCart: state.myCart,
   user: state.user,
   orders: state.orders
+  // products: state.products
 })
 
 const mapDispatch = dispatch => ({

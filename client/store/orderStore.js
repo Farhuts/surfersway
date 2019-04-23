@@ -108,8 +108,8 @@ export const changeQtyItemThunk = (productId, subTotal, quantity) => {
     try {
       const response = await axios.put('/api/orderItem/quantity', {
         productId,
-        quantity,
-        subTotal
+        subTotal,
+        quantity
       })
       const orderItem = response.data
       dispatch(changeQtyItem(orderItem))
@@ -133,8 +133,6 @@ export default function(state = initialState, action) {
       return action.total
     case GET_CART:
       return {...state, myCart: action.cart}
-    case CHANGE_QTY_ITEM:
-      return {...state, myCart: action.quantity}
     default:
       return state
   }

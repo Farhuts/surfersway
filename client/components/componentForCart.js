@@ -7,6 +7,7 @@ const ComponentForCart = props => {
   const deleteItem = props.deleteItem
   const getProductInfo = props.getProductInfo
   const history = props.history
+  console.log('component', ordersInCart)
 
   let orderDetails =
     ordersInCart && ordersInCart.length ? (
@@ -49,7 +50,7 @@ const ComponentForCart = props => {
       })
     ) : (
       <div className="container">
-        <h4>Your shooping cart is empty</h4>
+        <h4>Your shopping cart is empty</h4>
         <button
           className="waves-effect waves lighten-1 btn-large right"
           onClick={() => history.push('/products')}
