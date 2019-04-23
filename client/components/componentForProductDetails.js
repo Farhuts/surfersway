@@ -1,7 +1,7 @@
 import React from 'react'
 
 // component for allProducts
-const ForProductDetails = props => {
+const ComponentForProductDetails = props => {
   const productDetails = props.productDetails
   const handleAddToCart = props.handleAddToCart
   const handleChange = props.handleChange
@@ -19,7 +19,6 @@ const ForProductDetails = props => {
       </option>
     )
   })
-  console.log(value)
   return (
     <div className="container">
       <h3 className="center">{productDetails.name}</h3>
@@ -51,4 +50,4 @@ const ForProductDetails = props => {
   )
 }
 
-export default ForProductDetails
+export default ComponentForProductDetails

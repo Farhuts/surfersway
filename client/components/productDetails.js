@@ -6,7 +6,7 @@ import {
   setTotalThunk,
   postOrderThunk
 } from '../store/orderStore'
-import ForProductDetails from './forProductDetails'
+import ComponentForProductDetails from './componentForProductDetails'
 
 class ProductDetails extends Component {
   constructor(props) {
@@ -38,7 +38,6 @@ class ProductDetails extends Component {
   }
 
   handleChange(e) {
-    console.log('in handlechange: ', e.target.value)
     this.setState({
       quantity: e.target.value
     })
@@ -46,10 +45,9 @@ class ProductDetails extends Component {
 
   render() {
     const productDetails = this.props.currentProduct
-    console.log('ID CURR ORDER', this.props.orders.userOrder)
     return (
       <div>
-        <ForProductDetails
+        <ComponentForProductDetails
           {...this.state}
           productDetails={productDetails}
           handleAddToCart={this.handleAddToCart}
