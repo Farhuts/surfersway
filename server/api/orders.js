@@ -7,6 +7,7 @@ module.exports = router
 router.get('/myCart', async (req, res, next) => {
   try {
     const userId = req.session.passport.user
+    // console.log("FROM CART", req.params);
     const userOrder = await Order.findOne({
       where: {userId, status: 'cart'},
       include: [{model: Product}]
@@ -16,6 +17,9 @@ router.get('/myCart', async (req, res, next) => {
       order: [['createdAt', 'ASC']]
     })
     let userCart = {userOrder, userItemInCart}
+    // console.log("FROM GET", userItemInCart.map(item => {
+    //   return item.dataValues
+    // }))
     res.json(userCart)
   } catch (err) {
     next(err)

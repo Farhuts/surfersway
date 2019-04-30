@@ -103,13 +103,14 @@ export const removeItemThunk = (orderId, productId) => {
   }
 }
 
-export const changeQtyItemThunk = (productId, subTotal, quantity) => {
+export const changeQtyItemThunk = (productId, subTotal, quantity, orderId) => {
   return async dispatch => {
     try {
       const response = await axios.put('/api/orderItem/quantity', {
         productId,
         subTotal,
-        quantity
+        quantity,
+        orderId
       })
       const orderItem = response.data
       dispatch(changeQtyItem(orderItem))

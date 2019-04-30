@@ -14,18 +14,30 @@ const ComponentForCart = props => {
       ordersInCart.map(item => {
         let product = getProductInfo(item.productId)[0]
         let orderId = item.orderId
+        let stock = product.stock
         let productId = product.id
         let quantity = item.quantity
         let subTotal = item.subTotal
         let price = item.price
-
+        let limit = price * stock
+        const increment = () => {
+          if (subTotal === limit) {
+            return subTotal
+          }
+          return (subTotal += price)
+        }
         return (
           <div className="container" key={item.productId}>
             <p>
               Name {product.name}, QTY:
               <button
                 onClick={() =>
-                  changeQuantity(productId, subTotal - price, (quantity -= 1))
+                  changeQuantity(
+                    productId,
+                    subTotal - price,
+                    (quantity -= 1),
+                    orderId
+                  )
                 }
               >
                 -
@@ -33,7 +45,12 @@ const ComponentForCart = props => {
               {item.quantity}
               <button
                 onClick={() =>
-                  changeQuantity(productId, subTotal + price, (quantity += 1))
+                  changeQuantity(
+                    productId,
+                    increment(),
+                    (quantity += 1 && quantity !== stock),
+                    orderId
+                  )
                 }
               >
                 +

@@ -42,11 +42,12 @@ router.put('/quantity', async (req, res, next) => {
     const productId = req.body.productId
     const quantity = req.body.quantity
     const subTotal = req.body.subTotal
+    const orderId = req.body.orderId
 
-    console.log(req.body.subTotal)
+    console.log(req.body.quantity)
 
     let oldQuantity = await OrderItem.findOne({
-      where: {productId}
+      where: {productId, orderId}
     })
 
     let updateQTYItem = await oldQuantity.update({
@@ -54,8 +55,7 @@ router.put('/quantity', async (req, res, next) => {
       quantity: quantity,
       subTotal: subTotal
     })
-    console.log(updateQTYItem.subTotal)
-
+    console.log(updateQTYItem.dataValues)
     res.json(updateQTYItem)
   } catch (err) {
     next(err)
