@@ -27,6 +27,7 @@ class ProductDetails extends Component {
 
   handleAddToCart(e) {
     e.preventDefault()
+    // console.log(this.props.orders);
     let orderInfo = {
       productId: this.props.match.params.productId,
       quantity: this.state.quantity,
@@ -35,6 +36,7 @@ class ProductDetails extends Component {
       subTotal: this.state.quantity * this.props.currentProduct.price
     }
     this.props.addItemToOrderThunkDispatch(orderInfo)
+    // this.props.orders.currentOrder.id ||
   }
 
   handleChange(e) {
@@ -45,6 +47,7 @@ class ProductDetails extends Component {
 
   render() {
     const productDetails = this.props.currentProduct
+    console.log(this.props)
     return (
       <div>
         <ComponentForProductDetails

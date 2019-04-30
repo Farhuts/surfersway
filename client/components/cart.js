@@ -26,8 +26,13 @@ class Cart extends Component {
     })
   }
 
-  changeQuantity(productId, subTotal, quantity) {
-    this.props.changeQtyItemThunkDispatch(productId, subTotal, quantity)
+  async changeQuantity(productId, subTotal, quantity, orderId) {
+    await this.props.changeQtyItemThunkDispatch(
+      productId,
+      subTotal,
+      quantity,
+      orderId
+    )
     this.props.getCartThunkDispatch()
   }
 
@@ -41,7 +46,7 @@ class Cart extends Component {
   render() {
     let myCart = {...this.props.orders.myCart}
     let ordersInCart = myCart.userItemInCart
-    console.log('I refreshed')
+    console.log(myCart)
     return (
       <div>
         <ComponentForCart
@@ -67,8 +72,8 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
   getCartThunkDispatch: () => dispatch(getCartThunk()),
-  changeQtyItemThunkDispatch: (productId, subTotal, quantity) =>
-    dispatch(changeQtyItemThunk(productId, subTotal, quantity)),
+  changeQtyItemThunkDispatch: (productId, subTotal, quantity, orderId) =>
+    dispatch(changeQtyItemThunk(productId, subTotal, quantity, orderId)),
   removeItemThunkDispatch: (orderId, productId) =>
     dispatch(removeItemThunk(orderId, productId))
 })
