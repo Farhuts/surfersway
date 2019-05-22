@@ -3,10 +3,12 @@ import ComponentForCart from './componentForCart'
 import {
   getCartThunk,
   changeQtyItemThunk,
-  removeItemThunk
+  removeItemThunk,
+  whenlogout
 } from '../store/orderStore'
 // import {getProductsThunk} from '../store/productStore'
 import {connect} from 'react-redux'
+// import axios from 'axios'
 
 class Cart extends Component {
   constructor(props) {
@@ -39,14 +41,12 @@ class Cart extends Component {
   deleteItem(orderId, productId) {
     this.props.removeItemThunkDispatch(orderId, productId)
     this.props.getCartThunkDispatch()
-
-    // let newTotal = this.props.cart.currentOrder.total - quantity * price
-    // this.props.setTotalSub(updateInfo)
   }
+
   render() {
     let myCart = {...this.props.orders.myCart}
     let ordersInCart = myCart.userItemInCart
-    console.log(myCart)
+    // console.log(this.props.users.id);
     return (
       <div>
         <ComponentForCart
@@ -75,7 +75,8 @@ const mapDispatch = dispatch => ({
   changeQtyItemThunkDispatch: (productId, subTotal, quantity, orderId) =>
     dispatch(changeQtyItemThunk(productId, subTotal, quantity, orderId)),
   removeItemThunkDispatch: (orderId, productId) =>
-    dispatch(removeItemThunk(orderId, productId))
+    dispatch(removeItemThunk(orderId, productId)),
+  whenlogoutDispatch: () => dispatch(whenlogout())
 })
 
 export default connect(mapState, mapDispatch)(Cart)

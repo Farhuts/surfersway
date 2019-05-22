@@ -1,4 +1,5 @@
 import axios from 'axios'
+import history from '../history'
 
 // ACTION TYPES
 const GET_CART = 'GET_CART'
@@ -7,6 +8,7 @@ const SET_TOTAL = 'SET_TOTAL'
 const ADD_ORDER_ITEM = 'ADD_ORDER_ITEM'
 const CHANGE_QTY_ITEM = 'CHANGE_QTY_ITEM'
 const REMOVE = 'REMOVE'
+const REMOVE_CART = 'REMOVE_CART'
 
 // ACTION CREATORS
 const getCart = cart => ({
@@ -38,6 +40,8 @@ const removeItem = item => ({
   type: REMOVE,
   item
 })
+
+const removeCart = () => ({type: REMOVE_CART})
 
 // THUNK CREATORS
 export const getCartThunk = () => {
@@ -120,6 +124,16 @@ export const changeQtyItemThunk = (productId, subTotal, quantity, orderId) => {
   }
 }
 
+export const whenlogout = () => async dispatch => {
+  try {
+    await axios.post('/auth/logout')
+    dispatch(removeCart())
+    history.push('/auth/login')
+  } catch (err) {
+    console.error(err)
+  }
+}
+
 // INITIAL STATE
 const initialState = {
   myCart: {}
@@ -134,6 +148,8 @@ export default function(state = initialState, action) {
       return action.total
     case GET_CART:
       return {...state, myCart: action.cart}
+    case REMOVE_CART:
+      return {...state, myCart: {}}
     default:
       return state
   }
