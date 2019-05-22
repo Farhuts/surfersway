@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {logout} from '../store'
+import {logout, whenlogout} from '../store'
 
 const Navbar = ({handleClick, isLoggedIn}) => (
   <div className="navbar-fixed">
@@ -50,6 +50,7 @@ const mapDispatch = dispatch => {
   return {
     handleClick() {
       dispatch(logout())
+      dispatch(whenlogout())
     }
   }
 }

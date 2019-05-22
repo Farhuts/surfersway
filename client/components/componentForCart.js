@@ -7,7 +7,6 @@ const ComponentForCart = props => {
   const deleteItem = props.deleteItem
   const getProductInfo = props.getProductInfo
   const history = props.history
-  console.log('component', ordersInCart)
 
   let orderDetails =
     ordersInCart && ordersInCart.length ? (

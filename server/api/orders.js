@@ -6,12 +6,15 @@ module.exports = router
 // api/orders/myCart
 router.get('/myCart', async (req, res, next) => {
   try {
-    const userId = req.session.passport.user
-    // console.log("FROM CART", req.params);
-    const userOrder = await Order.findOne({
-      where: {userId, status: 'cart'},
+    const findUser = req.user
+      ? {userId: req.user.id, status: 'cart'}
+      : {sessionId: req.session.id, status: 'cart'}
+
+    let userOrder = await Order.findOne({
+      where: findUser,
       include: [{model: Product}]
     })
+
     let userItemInCart = await OrderItem.findAll({
       where: {orderId: userOrder.id},
       order: [['createdAt', 'ASC']]
@@ -20,7 +23,7 @@ router.get('/myCart', async (req, res, next) => {
     // console.log("FROM GET", userItemInCart.map(item => {
     //   return item.dataValues
     // }))
-    res.json(userCart)
+    return res.json(userCart)
   } catch (err) {
     next(err)
   }
@@ -28,19 +31,30 @@ router.get('/myCart', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    const userId = req.session.passport.user
+    const findUser = req.user
+      ? {userId: req.user.id, status: 'cart'}
+      : {sessionId: req.session.id, status: 'cart'}
+    console.log(
+      'FROM POST',
+      'Req,user =>',
+      req.user,
+      'SESSIONs =>',
+      req.session.passport
+    )
+    // userId = req.session.passport.user
     let currentOrder = await Order.findOne({
-      where: {userId, status: 'cart'},
+      where: findUser,
       include: [{model: Product}]
     })
     if (!currentOrder) {
-      currentOrder = await Order.create({userId, status: 'cart'})
+      currentOrder = await Order.create(findUser)
     }
     let orderItems = await OrderItem.findAll({
       where: {orderId: currentOrder.id}
     })
     let order = {currentOrder, orderItems}
-    res.json(order)
+    return res.json(order)
+    // }
   } catch (err) {
     next(err)
   }

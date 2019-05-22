@@ -14,6 +14,9 @@ const Order = db.define('order', {
     validate: {
       min: 0
     }
+  },
+  sessionId: {
+    type: Sequelize.STRING
   }
 })
 
