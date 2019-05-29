@@ -10,6 +10,7 @@ async function seed() {
   const [shortBoard, longBoard, foamy] = await Promise.all([
     Product.create({
       name: 'shortBoard',
+      description: 'short',
       imageUrl:
         'https://www.aotearoasurf.co.nz/wp-content/uploads/2017/10/BIC-6-7-Shortboard.jpg',
       stock: 5,
@@ -17,6 +18,7 @@ async function seed() {
     }),
     Product.create({
       name: 'longBoard',
+      description: 'long',
       imageUrl:
         'https://www.ronjonsurfshop.com/assets/item/alternate/large/10690064001D--rj_8_pintail_longboard_1208.jpg',
       stock: 5,
@@ -24,6 +26,7 @@ async function seed() {
     }),
     Product.create({
       name: 'foamy',
+      description: 'foam',
       imageUrl:
         'https://media.decathlon.my/1749164/100-foam-surfboard-7-supplied-with-leash-and-fins.jpg',
       stock: 5,

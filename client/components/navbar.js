@@ -5,35 +5,140 @@ import {Link} from 'react-router-dom'
 import {logout, whenlogout} from '../store'
 
 const Navbar = ({handleClick, isLoggedIn}) => (
-  <div className="navbar-fixed">
+  <div>
     <nav>
       <div className="nav-wraper">
         <div className="container">
-          <ul className="orders" className="right">
-            <Link to="/orders/myCart">Cart</Link>
-          </ul>
           <Link to="/home" className="brand-logo">
-            Surf
+            <img src="assets/003-surf-1.png" />
           </Link>
-          <div className="right">
-            {isLoggedIn ? (
-              <div>
+          <a href="#" className="sidenav-trigger" data-target="mobile-links">
+            <i className="material-icons">menu</i>
+          </a>
+          {isLoggedIn ? (
+            <ul className="right hide-on-med-and-down">
+              <li>
                 <Link to="/home">Home</Link>
-                <a href="#" onClick={handleClick}>
+              </li>
+              <li>
+                <Link to="#" onClick={handleClick}>
                   Logout
-                </a>
-              </div>
-            ) : (
-              <div>
-                <Link to="/login">Login</Link>
-                <Link to="/signup">Sign Up</Link>
-              </div>
-            )}
-          </div>
+                </Link>
+              </li>
+              <li
+                className="dropdown-button"
+                data-target="dropdown"
+                data-beloworigin="true"
+              >
+                <Link to="/products">Boards</Link>
+              </li>
+              <li>
+                <Link to="/orders/myCart">Cart</Link>
+              </li>
+            </ul>
+          ) : (
+            <ul className="right hide-on-med-and-down">
+              <li>
+                <Link to="/login" className="login">
+                  Login
+                </Link>
+              </li>
+              <li>
+                <Link to="/signup" className="signUp">
+                  Sign Up
+                </Link>
+              </li>
+              <li
+                className="dropdown-button"
+                data-target="dropdown"
+                data-beloworigin="true"
+              >
+                <Link to="/products">Boards</Link>
+              </li>
+              <li>
+                <Link to="/orders/myCart">Cart</Link>
+              </li>
+            </ul>
+          )}
         </div>
       </div>
     </nav>
     <hr />
+    <ul className="sidenav" id="mobile-links">
+      {isLoggedIn ? (
+        <div>
+          <li>
+            <Link to="/home">Home</Link>
+          </li>
+          <li>
+            <Link to="#" onClick={handleClick}>
+              Logout
+            </Link>
+          </li>
+          <li
+            className="dropdown-inner-button"
+            data-target="dropdown-inner"
+            data-beloworigin="true"
+          >
+            <Link to="/products">Boards</Link>
+          </li>
+          <li>
+            <Link to="/orders/myCart">Cart</Link>
+          </li>
+        </div>
+      ) : (
+        <div>
+          <li>
+            <Link to="/login" className="login">
+              Login
+            </Link>
+          </li>
+          <li>
+            <Link to="/signup" className="signUp">
+              Sign Up
+            </Link>
+          </li>
+          <li
+            className="dropdown-inner-button"
+            data-target="dropdown-inner"
+            data-beloworigin="true"
+          >
+            <Link to="/products">Boards</Link>
+          </li>
+          <li>
+            <Link to="/orders/myCart">Cart</Link>
+          </li>
+        </div>
+      )}
+    </ul>
+    <ul id="dropdown" className="dropdown-content">
+      <li>
+        <Link to="/products">All Collections</Link>
+      </li>
+      <li>
+        <Link to="/category/foamBoards">Foamies</Link>
+      </li>
+      <li>
+        <Link to="/category/shortBoards">Shorty</Link>
+      </li>
+      <li>
+        <Link to="/category/longBoards">Longie Long</Link>
+      </li>
+    </ul>
+    <ul id="dropdown-inner" className="dropdown-content">
+      <li>
+        <Link to="/products">All Collections</Link>
+      </li>
+      <li>
+        <Link to="/category/foamBoards">Foamies</Link>
+      </li>
+      <li>
+        <Link to="/category/shortBoards">Shorty</Link>
+      </li>
+      <li>
+        <Link to="/category/longBoards">Longie Long</Link>
+      </li>
+    </ul>
   </div>
 )
 

@@ -7,6 +7,8 @@ const ComponentForCart = props => {
   const deleteItem = props.deleteItem
   const getProductInfo = props.getProductInfo
   const history = props.history
+  let hide = true
+  let showhideclassname = hide ? 'hide' : 'show'
 
   let orderDetails =
     ordersInCart && ordersInCart.length ? (
@@ -27,6 +29,7 @@ const ComponentForCart = props => {
         }
         return (
           <div className="container" key={item.productId}>
+            {(showhideclassname = !hide)}
             <p>
               Name {product.name}, QTY:
               <button
@@ -73,17 +76,26 @@ const ComponentForCart = props => {
         >
           Get some bords
         </button>
+        {hide}
       </div>
     )
   return (
     <div className="container">
       {orderDetails}
-      <button
-        className="waves-effect waves lighten-1 btn-large right"
-        onClick={() => history.push('/products')}
-      >
-        Continue
-      </button>
+      <div className={showhideclassname}>
+        <button
+          className="waves-effect pink lighten-1 btn-large right"
+          onClick={() => history.push('/checkout')}
+        >
+          Checkout
+        </button>
+        <button
+          className="waves-effect waves lighten-1 btn-large right"
+          onClick={() => history.push('/products')}
+        >
+          Continue
+        </button>
+      </div>
     </div>
   )
 }

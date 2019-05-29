@@ -1,11 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {getOneProductThunk} from '../store/productStore'
-import {
-  addItemToOrderThunk,
-  setTotalThunk,
-  postOrderThunk
-} from '../store/orderStore'
+import Modal from './Modal'
+import {addItemToOrderThunk, postOrderThunk} from '../store/orderStore'
 import ComponentForProductDetails from './componentForProductDetails'
 
 class ProductDetails extends Component {
@@ -13,10 +10,11 @@ class ProductDetails extends Component {
     super(props)
     this.state = {
       quantity: 1,
-      textPopUp: ''
+      show: false
     }
     this.handleAddToCart = this.handleAddToCart.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.hideModal = this.hideModal.bind(this)
   }
   componentDidMount() {
     const productId = this.props.match.params.productId
@@ -35,6 +33,7 @@ class ProductDetails extends Component {
       subTotal: this.state.quantity * this.props.currentProduct.price
     }
     this.props.addItemToOrderThunkDispatch(orderInfo)
+    this.setState({show: true})
   }
 
   handleChange(e) {
@@ -43,15 +42,26 @@ class ProductDetails extends Component {
     })
   }
 
+  hideModal() {
+    this.setState({show: false})
+  }
+
   render() {
     const productDetails = this.props.currentProduct
     return (
-      <div>
+      <div className="shiftDown">
         <ComponentForProductDetails
           {...this.state}
           productDetails={productDetails}
           handleAddToCart={this.handleAddToCart}
           handleChange={this.handleChange}
+          history={this.props.history}
+        />
+        <Modal
+          show={this.state.show}
+          handleClose={this.hideModal}
+          productDetails={productDetails}
+          state={this.state}
           history={this.props.history}
         />
       </div>

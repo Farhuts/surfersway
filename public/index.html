@@ -4,23 +4,71 @@
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width initial-scale=1.0'>
     <title>Surfers Way</title>
+    <!-- favicon -->
+    <link rel="shortcut icon" type="image/png" href="/assets/004-surf-2.png"/>
 
-    <!-- Compiled and minified JavaScript -->
+   <!-- JQuery -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+   <!-- Compiled and minified JavaScript -->
    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
    <!-- Compiled and minified CSS -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+   <link rel="stylesheet" href="/style.css" />
 
-    <link rel="stylesheet" href="/style.css" />
+  <script defer src="/bundle.js"></script>
+  <script>
+    $(document).ready(function(){
+      $('.sidenav').sidenav()
+    })
+  </script>
 
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        var elems = document.querySelectorAll('select');
-        var instances = M.FormSelect.init(elems);
-      });
-    </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('select');
+      var instances = M.FormSelect.init(elems);
+    });
+  </script>
 
-    <script defer src="/bundle.js"></script>
+  <script>
+    $(document).ready(function(){
+        $(window).scroll(function(){
+          if($(window).scrollTop()>200){
+            $('nav li').addClass('grey lighten-5');
+          }else{
+            $('nav li').removeClass('grey lighten-5');
+          }
+        });
+     });
+  </script>
+
+  <script>
+  (function($) {
+    $(function() {
+    $('.dropdown-button').dropdown({
+        inDuration: 300,
+        outDuration: 225,
+        hover: true,
+        belowOrigin: true,
+        alignment: 'right'
+      })
+    })
+  })(jQuery)
+  </script>
+  
+  <script>
+  (function($) {
+    $(function() {
+    $('.dropdown-inner-button').dropdown({
+        inDuration: 300,
+        outDuration: 225,
+        hover: true,
+        belowOrigin: true,
+        alignment: 'right'
+      })
+    })
+  })(jQuery)
+  </script>
   </head>
   <body>
     <div id="app"></div>

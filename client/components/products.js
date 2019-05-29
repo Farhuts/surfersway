@@ -14,9 +14,7 @@ const Products = props => {
             <i className="material-icons pink-text pulse small right">
               favorite
             </i>
-            <span className="card-title">
-              <strong>{product.name}</strong>
-            </span>
+            <span className="card-title">{product.name}</span>
             <p className="product-description">{product.description}</p>
           </div>
         </div>

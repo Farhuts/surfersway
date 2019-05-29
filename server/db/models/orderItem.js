@@ -24,6 +24,11 @@ const OrderItem = db.define('orderItem', {
     validate: {
       min: 0
     }
+  },
+  shipped: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
   }
 })
 

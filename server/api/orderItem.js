@@ -67,8 +67,6 @@ router.put('/remove', async (req, res, next) => {
     const orderId = req.body.orderId
     const productId = req.body.productId
 
-    console.log(req.body)
-
     await OrderItem.destroy({
       where: {orderId, productId}
     })
