@@ -4,11 +4,10 @@ import {
   getCartThunk,
   changeQtyItemThunk,
   removeItemThunk,
+  getExpiredCartThunk,
   whenlogout
 } from '../store/orderStore'
-// import {getProductsThunk} from '../store/productStore'
 import {connect} from 'react-redux'
-// import axios from 'axios'
 
 class Cart extends Component {
   constructor(props) {
@@ -20,6 +19,7 @@ class Cart extends Component {
 
   componentDidMount() {
     this.props.getCartThunkDispatch()
+    this.props.getExpiredCartThunkDispatch()
   }
 
   getProductInfo(productId) {
@@ -46,9 +46,8 @@ class Cart extends Component {
   render() {
     let myCart = {...this.props.orders.myCart}
     let ordersInCart = myCart.userItemInCart
-    // console.log(this.props.users.id);
     return (
-      <div>
+      <div className="shiftDown">
         <ComponentForCart
           {...this.state}
           ordersInCart={ordersInCart}
@@ -76,6 +75,7 @@ const mapDispatch = dispatch => ({
     dispatch(changeQtyItemThunk(productId, subTotal, quantity, orderId)),
   removeItemThunkDispatch: (orderId, productId) =>
     dispatch(removeItemThunk(orderId, productId)),
+  getExpiredCartThunkDispatch: () => dispatch(getExpiredCartThunk()),
   whenlogoutDispatch: () => dispatch(whenlogout())
 })
 

@@ -1,46 +1,54 @@
-// const router = require('express').Router()
-// const {Orders, Products, OrderItems} = require('../db/models')
-// const SECRET_KEY = process.env.SECRET_KEY
-// const stripe = require('stripe')(SECRET_KEY)
-// module.exports = router
-//
-// router.post('/', (req, res, next) => {
-//   stripe.charges.create(req.body, (stripeErr, stripeRes) => {
-//     stripeErr
-//       ? res.status(500).send({error: stripeErr})
-//       : res.status(200).send({success: stripeRes})
-//   })
-// })
-//
-// router.put('/:cartId', async (req, res, next) => {
-//   try {
-//     const cart = await Orders.findOne({
-//       where: {id: req.params.cartId},
-//       include: [
-//         {
-//           model: Products,
-//           attributes: ['id', 'price']
-//         }
-//       ]
-//     })
-//
-//     cart.products.forEach(async product => {
-//       await OrderItems.update(
-//         {
-//           price: product.price
-//         },
-//         {
-//           where: {
-//             orderId: cart.id,
-//             productId: product.id
-//           }
-//         }
-//       )
-//     })
-//
-//     await cart.update({status: 'complete', total: req.body.amt})
-//     res.sendStatus(200)
-//   } catch (error) {
-//     next(error)
-//   }
-// })
+const router = require('express').Router()
+const {Order, OrderItem} = require('../db/models')
+const key = require('../config/key')
+const SECRET_KEY = key.stripe.clientSecret
+const stripe = require('stripe')(SECRET_KEY)
+
+module.exports = router
+
+router.post('/checkout', async (req, res, next) => {
+  const stripeToken = req.body.stripeToken
+  const {id, products} = req.body.user
+
+  let productInfo = products.map(product => {
+    return {
+      productId: product.id,
+      subTotal: product.orderItem.subTotal,
+      shipped: product.shipped
+    }
+  })
+
+  let amount = productInfo
+    .map(totalSub => {
+      return totalSub.subTotal
+    })
+    .reduce((sum, item) => sum + item, 0)
+
+  const cart = await Order.findOne({
+    where: {id}
+  })
+  await cart.update({status: 'complete', total: amount})
+
+  const orders = await OrderItem.findAll({
+    where: {
+      orderId: id
+    }
+  })
+  await orders.forEach(item => {
+    item.update({shipped: true})
+  })
+
+  stripe.charges.create(
+    {
+      amount: amount * 100,
+      description: 'Sample Charge',
+      currency: 'usd',
+      source: stripeToken
+    },
+    (err, charge) => {
+      // console.log("Charge", charge);
+      if (err) res.send({success: false, message: 'Error'})
+      else res.send({success: true, message: 'Yaii'})
+    }
+  )
+})

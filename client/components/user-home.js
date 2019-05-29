@@ -18,7 +18,6 @@ class UserHome extends Component {
   render() {
     let cart = {...this.props.cart.orders.myCart}
     const userCart = cart.userItemInCart
-    // console.log("USER CART", cart)
     let resultBtn =
       userCart && userCart.length ? (
         <div>
@@ -47,9 +46,11 @@ class UserHome extends Component {
         </Link>
       )
     return (
-      <div className="container">
-        <h3>Welcome, {this.props.userName}</h3>
-        {resultBtn}
+      <div className="shiftDown">
+        <div className="container">
+          <h3>Welcome, {this.props.userName}</h3>
+          {resultBtn}
+        </div>
       </div>
     )
   }
