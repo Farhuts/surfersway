@@ -6,13 +6,18 @@ const Product = db.define('product', {
     type: Sequelize.STRING,
     allowNull: false
   },
+  size: {
+    type: Sequelize.STRING
+  },
   description: {
     type: Sequelize.TEXT
   },
+  boardType: {
+    type: Sequelize.STRING
+  },
   imageUrl: {
     type: Sequelize.STRING,
-    defaultValue:
-      'https://thumbs.dreamstime.com/z/dog-s-shoe-tripping-untied-35441924.jpg',
+    defaultValue: 'src="assets/items/fomie_pink.jpg',
     validate: {
       isUrl: true
     }

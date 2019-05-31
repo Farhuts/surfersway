@@ -1,92 +1,112 @@
-import React from 'react'
+import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import PropTypes from 'prop-types'
 import {auth} from '../store'
+import LoginForm from './authformComponents/loginForm'
+import SignupForm from './authformComponents/signupForm'
+import SocialMedia from './authformComponents/socialMedia'
 
-/**
- * COMPONENT
- */
-const AuthForm = props => {
-  const {name, displayName, handleSubmit, error} = props
+class AuthForm extends Component {
+  animate = evt => {
+    if (evt.target.id === 'signup_btn') {
+      main.style.transform = 'translate(-140%, -50%)'
+      main.style.transition = '1s'
 
-  return (
-    <div className="shiftDown">
-      <div className="container">
-        <form onSubmit={handleSubmit} name={name}>
-          <div>
-            <label htmlFor="userName">
-              <small>Name</small>
-            </label>
-            <input name="userName" type="text" />
-          </div>
-          <div>
-            <label htmlFor="email">
-              <small>Email</small>
-            </label>
-            <input name="email" type="text" />
-          </div>
-          <div>
-            <label htmlFor="password">
-              <small>Password</small>
-            </label>
-            <input name="password" type="password" />
-          </div>
-          <div>
-            <button type="submit">{displayName}</button>
-          </div>
-          {error && error.response && <div> {error.response.data} </div>}
-        </form>
-        <a href="/auth/google">{displayName} with Google</a>
-      </div>
-    </div>
-  )
-}
+      login.style.transform = 'translate(-180%, -50%)'
+      login.style.visibility = 'hidden'
+      login.style.transition = '0s'
 
-/**
- * CONTAINER
- *   Note that we have two different sets of 'mapStateToProps' functions -
- *   one for Login, and one for Signup. However, they share the same 'mapDispatchToProps'
- *   function, and share the same Component. This is a good example of how we
- *   can stay DRY with interfaces that are very similar to each other!
- */
-const mapLogin = state => {
-  return {
-    name: 'login',
-    displayName: 'Login',
-    error: state.user.error
-  }
-}
+      signup.style.transform = 'translate(-230%, -50%)'
+      signup.style.visibility = 'visible'
+      signup.style.transition = '1.3s'
 
-const mapSignup = state => {
-  return {
-    name: 'signup',
-    displayName: 'Sign Up',
-    error: state.user.error
-  }
-}
+      linkSocialMedia.style.transform = 'translate(55%, -50%)'
+      linkSocialMedia.style.transition = '1.3s'
 
-const mapDispatch = dispatch => {
-  return {
-    handleSubmit(evt) {
-      evt.preventDefault()
-      const formName = evt.target.name
-      const email = evt.target.email.value
-      const password = evt.target.password.value
-      const userName = evt.target.userName.value
-      dispatch(auth(email, password, formName, userName))
+      star.style.transform = 'translate(180%, -50%)'
+      star.style.transition = '2.3s'
+    } else {
+      main.style.transform = 'translate(-50%, -50%)'
+      main.style.transition = '1s'
+
+      signup.style.transform = 'translate(-80%, -50%)'
+      signup.style.visibility = 'hidden'
+      signup.style.transition = '0s'
+
+      login.style.visibility = 'visible'
+      login.style.transform = 'translate(-48%, -50%)'
+      login.style.transition = '1.3s'
+
+      linkSocialMedia.style.transform = 'translate(1%, -50%)'
+      linkSocialMedia.style.transition = '1.3s'
+
+      star.style.transform = 'translate(1%, 0%)'
+      star.style.transition = '2.3s'
     }
   }
+  handleSubmit = evt => {
+    evt.preventDefault()
+    const formName = evt.target.name
+    if (formName === 'login') {
+      const userInfoLogin = {}
+      userInfoLogin.email = evt.target.email.value
+      userInfoLogin.password = evt.target.password.value
+      this.props.authDispatch(userInfoLogin, formName)
+    } else {
+      const userInfoSignup = {}
+      userInfoSignup.email = evt.target.email.value
+      userInfoSignup.password = evt.target.password.value
+      userInfoSignup.userName = evt.target.userName.value
+      this.props.authDispatch(userInfoSignup, formName)
+    }
+  }
+  render() {
+    const {error} = this.props
+    return (
+      <div className="shiftDown" id="box">
+        <div className="container">
+          <div id="main" />
+          <LoginForm
+            error={error}
+            name="login"
+            handleSubmit={this.handleSubmit}
+            displayName="LOGIN"
+          />
+
+          <SignupForm
+            error={error}
+            name="signup"
+            handleSubmit={this.handleSubmit}
+            displayName="SIGN UP"
+          />
+          <div id="login_msg">Have an account?</div>
+          <div id="signup_msg">Don't have an account?</div>
+
+          <button type="submit" onClick={this.animate} id="login_btn">
+            LOGIN
+          </button>
+          <button type="submit" onClick={this.animate} id="signup_btn">
+            SIGN UP
+          </button>
+        </div>
+        <SocialMedia />
+        <img
+          id="star"
+          className="star"
+          width="80"
+          height="80"
+          src="assets/star2.png"
+        />
+      </div>
+    )
+  }
 }
 
-export const Login = connect(mapLogin, mapDispatch)(AuthForm)
-export const Signup = connect(mapSignup, mapDispatch)(AuthForm)
+const mapState = state => ({
+  error: state.user.error
+})
 
-/**
- * PROP TYPES
- */
-AuthForm.propTypes = {
-  name: PropTypes.string.isRequired,
-  displayName: PropTypes.string.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
-  error: PropTypes.object
-}
+const mapDispatch = dispatch => ({
+  authDispatch: (userInfo, formName) => dispatch(auth(userInfo, formName))
+})
+
+export default connect(mapState, mapDispatch)(AuthForm)

@@ -24,7 +24,12 @@ class AllProducts extends Component {
   }
   render() {
     let productList = this.props.products.filter(item => {
-      return item.name.indexOf(this.state.search) !== -1
+      let itemLowerCase = item.name.toLowerCase()
+      let itemUpperCase = item.name
+      return (
+        itemLowerCase.indexOf(this.state.search) !== -1 ||
+        itemUpperCase.indexOf(this.state.search) !== -1
+      )
     })
     return (
       <div className="shiftDown">

@@ -11,7 +11,7 @@ class FoamBoards extends Component {
   render() {
     const categoryList = []
     const category = this.props.products.map(item => {
-      if (item.description === 'foam') {
+      if (item.boardType === 'bodyBoard') {
         categoryList.push(item)
       }
       return categoryList
