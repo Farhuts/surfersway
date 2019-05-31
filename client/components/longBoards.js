@@ -11,7 +11,7 @@ class LongBoards extends Component {
   render() {
     const categoryList = []
     const category = this.props.products.map(item => {
-      if (item.description === 'long') {
+      if (item.boardType === 'long') {
         categoryList.push(item)
       }
       return categoryList

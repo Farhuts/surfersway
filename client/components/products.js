@@ -15,7 +15,7 @@ const Products = props => {
               favorite
             </i>
             <span className="card-title">{product.name}</span>
-            <p className="product-description">{product.description}</p>
+            <p className="product-description">SIZE: {product.size}</p>
           </div>
         </div>
       </div>

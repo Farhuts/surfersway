@@ -11,7 +11,7 @@ class ShortBoards extends Component {
   render() {
     const categoryList = []
     const category = this.props.products.map(item => {
-      if (item.description === 'short') {
+      if (item.boardType === 'shorty') {
         categoryList.push(item)
       }
       return categoryList

@@ -1,12 +1,14 @@
 import React from 'react'
 
 // component for cart
-const ComponentForCart = props => {
-  const ordersInCart = props.ordersInCart
-  const changeQuantity = props.changeQuantity
-  const deleteItem = props.deleteItem
-  const getProductInfo = props.getProductInfo
-  const history = props.history
+const ComponentForCart = ({
+  ordersInCart,
+  changeQuantity,
+  deleteItem,
+  getProductInfo,
+  history
+}) => {
+  let grandSubTotal = 0
   let hide = true
   let showhideclassname = hide ? 'hide' : 'show'
 
@@ -14,13 +16,14 @@ const ComponentForCart = props => {
     ordersInCart && ordersInCart.length ? (
       ordersInCart.map(item => {
         let product = getProductInfo(item.productId)[0]
+        console.log('product', product)
         let orderId = item.orderId
-        let stock = product.stock
         let productId = product.id
         let quantity = item.quantity
         let subTotal = item.subTotal
+        grandSubTotal += subTotal
         let price = item.price
-        let limit = price * stock
+        let limit = price * product.stock
         const increment = () => {
           if (subTotal === limit) {
             return subTotal
@@ -28,42 +31,55 @@ const ComponentForCart = props => {
           return (subTotal += price)
         }
         return (
-          <div className="container" key={item.productId}>
+          <div key={item.productId}>
             {(showhideclassname = !hide)}
-            <p>
-              Name {product.name}, QTY:
-              <button
-                onClick={() =>
-                  changeQuantity(
-                    productId,
-                    subTotal - price,
-                    (quantity -= 1),
-                    orderId
-                  )
-                }
-              >
-                -
-              </button>
-              {item.quantity}
-              <button
-                onClick={() =>
-                  changeQuantity(
-                    productId,
-                    increment(),
-                    (quantity += 1 && quantity !== stock),
-                    orderId
-                  )
-                }
-              >
-                +
-              </button>
-              Price ${item.price} - subTotal {item.subTotal}
-              <button onClick={() => deleteItem(orderId, productId)}>
-                {' '}
-                X{' '}
-              </button>
-            </p>
-            <hr className="cart" />
+            <div>
+              <img className="responsive-img cartImg" src={product.imageUrl} />
+            </div>
+            <div className="productImg">
+              {product.name}
+              <div className="divQty">
+                QTY:
+                <button
+                  className="qtyBtn"
+                  onClick={() =>
+                    changeQuantity(
+                      productId,
+                      subTotal - price,
+                      (quantity -= 1),
+                      orderId
+                    )
+                  }
+                >
+                  -
+                </button>
+                {item.quantity}
+                <button
+                  className="qtyBtn"
+                  onClick={() =>
+                    changeQuantity(
+                      productId,
+                      increment(),
+                      (quantity += 1 && quantity !== product.stock),
+                      orderId
+                    )
+                  }
+                >
+                  +
+                </button>
+              </div>
+              <div>
+                Price: ${item.price}
+                <button
+                  className="deleteQtyBtn"
+                  onClick={() => deleteItem(orderId, productId)}
+                >
+                  {' '}
+                  X{' '}
+                </button>
+              </div>
+              <hr className="cart" />
+            </div>
           </div>
         )
       })
@@ -82,15 +98,16 @@ const ComponentForCart = props => {
   return (
     <div className="container">
       {orderDetails}
+      <h5 className="subTotal">SubTotal: ${grandSubTotal}</h5>
       <div className={showhideclassname}>
         <button
-          className="waves-effect pink lighten-1 btn-large right"
+          className="waves-effect pink lighten-1 btn-large right cartBtn"
           onClick={() => history.push('/checkout')}
         >
           Checkout
         </button>
         <button
-          className="waves-effect waves lighten-1 btn-large right"
+          className="waves-effect waves lighten-1 btn-large right cartBtn"
           onClick={() => history.push('/products')}
         >
           Continue

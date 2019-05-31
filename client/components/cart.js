@@ -46,6 +46,7 @@ class Cart extends Component {
   render() {
     let myCart = {...this.props.orders.myCart}
     let ordersInCart = myCart.userItemInCart
+    console.log('myCart', myCart.userOrder)
     return (
       <div className="shiftDown">
         <ComponentForCart

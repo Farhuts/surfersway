@@ -14,60 +14,22 @@
    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
    <!-- Compiled and minified CSS -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+   <!-- Custom CSS -->
    <link rel="stylesheet" href="/style.css" />
 
+   <!-- Jquery -->
+   <script src="/Jquery/Jquery-auth-css.js"></script>
+   <script src="/Jquery/Jquery-navbar-product.js"></script>
+   <script src="/Jquery/Jquery-nav-scroll.js"></script>
+
   <script defer src="/bundle.js"></script>
-  <script>
-    $(document).ready(function(){
-      $('.sidenav').sidenav()
-    })
-  </script>
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       var elems = document.querySelectorAll('select');
       var instances = M.FormSelect.init(elems);
     });
-  </script>
-
-  <script>
-    $(document).ready(function(){
-        $(window).scroll(function(){
-          if($(window).scrollTop()>200){
-            $('nav li').addClass('grey lighten-5');
-          }else{
-            $('nav li').removeClass('grey lighten-5');
-          }
-        });
-     });
-  </script>
-
-  <script>
-  (function($) {
-    $(function() {
-    $('.dropdown-button').dropdown({
-        inDuration: 300,
-        outDuration: 225,
-        hover: true,
-        belowOrigin: true,
-        alignment: 'right'
-      })
-    })
-  })(jQuery)
-  </script>
-  
-  <script>
-  (function($) {
-    $(function() {
-    $('.dropdown-inner-button').dropdown({
-        inDuration: 300,
-        outDuration: 225,
-        hover: true,
-        belowOrigin: true,
-        alignment: 'right'
-      })
-    })
-  })(jQuery)
   </script>
   </head>
   <body>
