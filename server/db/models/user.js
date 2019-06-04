@@ -27,22 +27,13 @@ const User = db.define('user', {
       return () => this.getDataValue('salt')
     }
   },
-  // state:{
-  //   type: Sequelize.STRING,
-  // },
-  // city:{
-  //   type: Sequelize.STRING,
-  // },
-  // street:{
-  //   type: Sequelize.STRING,
-  // },
-  // appartment:{
-  //   type: Sequelize.STRING,
-  // },
-  // zipcode:{
-  //   type: Sequelize.STRING,
-  // },
   googleId: {
+    type: Sequelize.STRING
+  },
+  facebookId: {
+    type: Sequelize.STRING
+  },
+  tweeterId: {
     type: Sequelize.STRING
   }
 })

@@ -1,28 +1,29 @@
 const router = require('express').Router()
 const passport = require('passport')
-const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
+const FacebookStrategy = require('passport-facebook').Strategy
 const {User} = require('../db/models')
 module.exports = router
 
-if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
+if (!process.env.FACEBOOK_CLIENT_ID || !process.env.FACEBOOK_CLIENT_SECRET) {
   console.log('Google client ID / secret not found. Skipping Google OAuth.')
 } else {
-  const googleConfig = {
-    clientID: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: process.env.GOOGLE_CALLBACK
+  const facebookConfig = {
+    clientID: process.env.FACEBOOK_CLIENT_ID,
+    clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+    callbackURL: process.env.FACEBOOK_CALLBACK,
+    profileFields: ['id', 'displayName', 'email']
   }
 
-  const strategy = new GoogleStrategy(
-    googleConfig,
+  const strategy = new FacebookStrategy(
+    facebookConfig,
     (token, refreshToken, profile, done) => {
-      console.log('PROFULE', profile, profile.emails[0].value)
-      const googleId = profile.id
+      console.log('PROFULE', profile)
+      const facebookId = profile.id
       const userName = profile.displayName
       const email = profile.emails[0].value
 
       User.findOrCreate({
-        where: {googleId},
+        where: {facebookId},
         defaults: {userName, email}
       })
         .then(([userName]) => done(null, userName))
@@ -34,14 +35,15 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
 
   router.get(
     '/',
-    passport.authenticate('google', {
-      scope: ['email', 'profile']
+    passport.authenticate('facebook', {
+      authType: 'rerequest',
+      scope: ['public_profile', 'email']
     })
   )
 
   router.get(
     '/callback',
-    passport.authenticate('google', {
+    passport.authenticate('facebook', {
       successRedirect: '/home',
       failureRedirect: '/login'
     })
