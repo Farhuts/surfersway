@@ -1,5 +1,8 @@
 /* font-family: sans-serif;
 } */
+body {
+  margin-top: -2%;
+}
 a {
   text-decoration: none;
 }
@@ -11,8 +14,8 @@ label {
 nav {
   position: fixed;
   z-index: 2;
-  background-color: #00000008;
-  margin-top: -0.8%;
+  background-color: #f1ebebb8;
+  top: 0;
 }
 nav a.brand-logo {
   display: inline-block;
@@ -92,7 +95,7 @@ form div {
 }
 
 hr {
-  border: 1px solid white;
+  border: 1px solid transparent;
   margin: 2em 0 4em 0;
 }
 
@@ -140,8 +143,9 @@ a {
 #box {
   height: 12.5rem;
   width: 62.5rem;
-  background-color: #f3958bc9;
+  /* background-color: #f3958bc9; */
   background-color: #f1aba3c9;
+  background-color: #70243c;
   border-radius: 5px;
   position: absolute;
   top: 40%;
@@ -152,6 +156,7 @@ a {
   height: 25rem;
   width: 28.125rem;
   background-color: #378881;
+  background-color: #215c57f2;
   border-radius: 5px;
   position: absolute;
   top: 40%;
@@ -352,12 +357,6 @@ img.star {
   margin-left: 1em;
 }
 
-img.responsive-img {
-  max-width: 50%;
-  height: auto;
-  /* margin-right: 5rem; */
-}
-
 img.cartImg {
   max-width: 15%;
   height: auto;
@@ -386,19 +385,23 @@ p {
 .return {
   width: 11rem;
 }
-.qtyBtn {
+.qtyBtn,
+.qtyBtnOne {
   height: 35px;
   width: 35px;
   border: 2px solid teal;
   border-radius: 5px;
-  margin: 0.2em;
+  margin: 0.53em;
+}
+.qtyBtnOne {
+  margin: 0.6em;
 }
 .deleteQtyBtn {
   height: 35px;
   width: 35px;
   border: 2px solid red;
   border-radius: 5px;
-  margin-left: 0.65em;
+  margin-left: 1.4em;
 }
 
 .divQty {
@@ -408,6 +411,47 @@ p {
 .subTotal {
   margin-left: 3em;
 }
-/* .cartContainer {
-  width: 80%;
-} */
+
+.card.small .card-content {
+  margin-top: 15%;
+}
+
+div.card.hoverable.horizontal.small {
+  border-radius: 20px;
+}
+
+img.responsive-img.productDetailImgBody {
+  margin-top: -10%;
+}
+
+.slide-container {
+  position: relative;
+  margin: 0;
+  padding: 0;
+}
+
+.slide {
+  position: absolute;
+  top: -200px;
+  left: 0;
+  bottom: 0;
+  opacity: 0;
+  transition: opacity 2s;
+  z-index: -1;
+}
+
+.slide.active {
+  opacity: 1;
+  z-index: -1;
+}
+
+button#prevBtn.btn-large,
+button#nextBtn.btn-large {
+  margin-top: 20%;
+  background-color: #2d302fb5;
+  border-radius: 5px;
+}
+
+button#prevBtn.btn-large {
+  position: absolute;
+}
