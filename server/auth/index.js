@@ -36,7 +36,7 @@ router.post('/signup', async (req, res, next) => {
 router.post('/logout', (req, res) => {
   req.logout()
   req.session.destroy()
-  res.redirect('/')
+  res.redirect('/auth')
 })
 
 router.get('/me', (req, res) => {
@@ -44,3 +44,5 @@ router.get('/me', (req, res) => {
 })
 
 router.use('/google', require('./google'))
+router.use('/facebook', require('./facebook'))
+// router.use('/tweeter', require('./tweeter'))
