@@ -12,7 +12,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
     <nav>
       <div className="nav-wraper">
         <div className="container">
-          <Link to="/home" className="brand-logo">
+          <Link to="/main" className="brand-logo">
             <img src="003-surf-1.png" />
           </Link>
           <a href="#" className="sidenav-trigger" data-target="mobile-links">
