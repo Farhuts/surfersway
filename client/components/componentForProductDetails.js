@@ -10,6 +10,7 @@ const ComponentForProductDetails = ({
 }) => {
   const boardType = productDetails.boardType
   let quantityArr = []
+  let imgInProductDetails
   for (let i = 1; i <= productDetails.stock; i++) {
     quantityArr.push(i)
   }
@@ -20,10 +21,27 @@ const ComponentForProductDetails = ({
       </option>
     )
   })
+  if (boardType === 'bodyBoard' || boardType === 'shorty')
+    imgInProductDetails = (
+      <img
+        className="responsive-img productDetailImgBody"
+        width="500"
+        src={productDetails.imageUrl}
+      />
+    )
+  else
+    imgInProductDetails = (
+      <img
+        className="responsive-img"
+        width="500"
+        src={productDetails.imageUrl}
+      />
+    )
+
   return (
     <div className="container">
       <h3 className="center">{productDetails.name}</h3>
-      <img className="responsive-img" src={productDetails.imageUrl} />
+      {imgInProductDetails}
       <div className="productDetailsDescription">
         <p>FEATURES</p>
         <p>{productDetails.description}</p>

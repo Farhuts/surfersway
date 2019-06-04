@@ -11,12 +11,12 @@ const ComponentForCart = ({
   let grandSubTotal = 0
   let hide = true
   let showhideclassname = hide ? 'hide' : 'show'
+  let qtyBtn = 'qtyBtn'
 
   let orderDetails =
     ordersInCart && ordersInCart.length ? (
       ordersInCart.map(item => {
         let product = getProductInfo(item.productId)[0]
-        console.log('product', product)
         let orderId = item.orderId
         let productId = product.id
         let quantity = item.quantity
@@ -30,6 +30,8 @@ const ComponentForCart = ({
           }
           return (subTotal += price)
         }
+        if (item.quantity === 1) qtyBtn = 'qtyBtnOne'
+        else qtyBtn = 'qtyBtn'
         return (
           <div key={item.productId}>
             {(showhideclassname = !hide)}
@@ -41,7 +43,7 @@ const ComponentForCart = ({
               <div className="divQty">
                 QTY:
                 <button
-                  className="qtyBtn"
+                  className={qtyBtn}
                   onClick={() =>
                     changeQuantity(
                       productId,
@@ -98,8 +100,8 @@ const ComponentForCart = ({
   return (
     <div className="container">
       {orderDetails}
-      <h5 className="subTotal">SubTotal: ${grandSubTotal}</h5>
       <div className={showhideclassname}>
+        <h5 className="subTotal">SubTotal: ${grandSubTotal}</h5>
         <button
           className="waves-effect pink lighten-1 btn-large right cartBtn"
           onClick={() => history.push('/checkout')}

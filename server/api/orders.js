@@ -35,7 +35,6 @@ router.get('/myCartExpired', async (req, res, next) => {
   try {
     let sessionOrderId
     let sessionInOrderItem
-    let twin = []
 
     // today
     let today = new Date() + ''
@@ -50,17 +49,6 @@ router.get('/myCartExpired', async (req, res, next) => {
     })
 
     console.log('expiredSession', expiredSession)
-
-    // let dublicate = await Order.destroy({
-    //   where: {
-    //     userId: null,
-    //     status: {
-    //       [Op.ne]: 'complete'
-    //     }
-    //   }
-    // })
-    //
-    // console.log('dublicate', dublicate)
 
     let dateGuestOrder = expiredSession
       .map(order => {
