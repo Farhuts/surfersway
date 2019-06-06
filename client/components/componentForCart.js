@@ -71,14 +71,17 @@ const ComponentForCart = ({
                 </button>
               </div>
               <div>
-                Price: ${item.price}
-                <button
-                  className="deleteQtyBtn"
-                  onClick={() => deleteItem(orderId, productId)}
-                >
-                  {' '}
-                  X{' '}
-                </button>
+                <p className="priceAndDelete">Price: ${item.price}</p>
+                <p className="priceAndDelete">
+                  I don't need it
+                  <button
+                    className="deleteQtyBtn"
+                    onClick={() => deleteItem(orderId, productId)}
+                  >
+                    {' '}
+                    X{' '}
+                  </button>
+                </p>
               </div>
               <hr className="cart" />
             </div>

@@ -59,6 +59,10 @@ nav .translateY:hover {
   margin-top: 6em;
 }
 
+.shiftDownCart {
+  margin-top: 7em;
+}
+
 .dropdown-content {
   background-color: #ffffff;
   margin: 0;
@@ -141,12 +145,12 @@ a {
 }
 
 #box {
-  height: 12.5rem;
-  width: 62.5rem;
-  /* background-color: #f3958bc9; */
+  height: 25rem;
+  width: 58rem;
   background-color: #f1aba3c9;
-  background-color: #70243c;
-  border-radius: 5px;
+  background-color: white;
+  border-radius: 10px;
+  border: 2px solid #378881;
   position: absolute;
   top: 40%;
   left: 50%;
@@ -154,14 +158,14 @@ a {
 }
 #main {
   height: 25rem;
-  width: 28.125rem;
+  width: 30rem;
   background-color: #378881;
-  background-color: #215c57f2;
-  border-radius: 5px;
+  /* background-color: #215c57f2; */
+  border-radius: 10px;
   position: absolute;
-  top: 40%;
-  left: 70%;
-  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 75%;
+  transform: translate(-52%, -50%);
   z-index: 100;
 }
 
@@ -169,8 +173,8 @@ a {
 #signup {
   position: absolute;
   top: 50%;
-  left: 70%;
-  transform: translate(-50%, -50%);
+  left: 73%;
+  transform: translate(-48%, -50%);
   z-index: 999;
 }
 
@@ -181,23 +185,23 @@ a {
   background: #e8f0fe;
 }
 #signup {
-  top: 45%;
-  left: 75%;
+  top: 50%;
+  left: 73%;
   visibility: hidden;
 }
 
 #login_btn,
 #signup_btn {
-  height: 35px;
-  width: 120px;
+  height: 50px;
+  width: 180px;
   background-color: transparent;
-  color: white;
-  border: 2px solid white;
-  border-radius: 5px;
+  color: #378881;
+  border: 2px solid #378881;
+  border-radius: 30px;
   outline: none;
   position: absolute;
   left: 75%;
-  top: 65%;
+  top: 40%;
   transform: translate(-50%, -50%);
   transition: all 0.5s;
 }
@@ -207,14 +211,16 @@ a {
 }
 
 .displayNameBtn {
-  height: 35px;
-  width: 120px;
+  height: 50px;
+  width: 150px;
   background-color: transparent;
   color: white;
   border: 2px solid white;
-  border-radius: 5px;
+  border-radius: 15px;
   outline: none;
   transition: background-color 0.5s, color 0.5s;
+  margin-left: 21%;
+  margin-top: 6%;
 }
 .displayNameBtn:hover {
   background-color: #e8f0fe;
@@ -224,17 +230,18 @@ a {
 
 #login_btn:hover,
 #signup_btn:hover {
-  background-color: #f7f4f4;
-  color: #2d2d2d;
+  background-color: #378881;
+  color: white;
   cursor: pointer;
 }
+
 #login_msg,
 #signup_msg {
   font-family: arial;
   font-size: 25px;
-  color: white;
+  color: #378881;
   position: absolute;
-  top: 35%;
+  top: 20%;
   left: 75%;
   transform: translate(-50%, -50%);
   z-index: 1;
@@ -281,6 +288,7 @@ a {
     padding: 2%;
     background: #e8f0fe;
   }
+
   #signup {
     top: 45%;
     left: 75%;
@@ -297,8 +305,8 @@ a {
     border-radius: 5px;
     outline: none;
     position: absolute;
+    top: 70%;
     left: 75%;
-    top: 65%;
     transform: translate(-50%, -50%);
     transition: all 0.5s;
   }
@@ -335,7 +343,7 @@ a {
     font-size: 16px;
     color: white;
     position: absolute;
-    top: 35%;
+    top: 50%;
     left: 70%;
     transform: translate(-50%, -50%);
     z-index: 1;
@@ -349,18 +357,47 @@ select {
   width: 20%;
 }
 
-img.linkSocialMedia {
-  margin-top: 21%;
-  margin-left: 4em;
+#linkSocialMedia {
+  margin-top: 30%;
+  margin-left: 4.5em;
+  width: 35%;
+  display: flex;
+  justify-content: space-around;
+  transition: all 0.5s;
 }
-img.star {
-  margin-left: 1em;
+
+.icon {
+  border-radius: 35px;
+  border: 2px solid #c84775e6;
+  background-color: transparent;
+  width: 70px;
+  height: 70px;
+  transition: 0.5s;
+}
+
+.iconP {
+  margin: 12px 0 0 0;
+  text-align: center;
+  color: #c84775e6;
+  font-size: 25px;
+  font-weight: 600;
+  transition: 0.5s;
+}
+
+.icon:hover {
+  background-color: #c84775e6;
+  transform: scale(1.1);
+  border: transparent;
+}
+
+.iconP:hover {
+  color: white;
 }
 
 img.cartImg {
   max-width: 15%;
   height: auto;
-  margin: -4em 12em 0 6em;
+  margin: -2em 12em 0 6em;
 }
 
 .productDetailsDescription p:first-child {
@@ -401,7 +438,7 @@ p {
   width: 35px;
   border: 2px solid red;
   border-radius: 5px;
-  margin-left: 1.4em;
+  margin-left: 0.6em;
 }
 
 .divQty {
@@ -454,4 +491,8 @@ button#nextBtn.btn-large {
 
 button#prevBtn.btn-large {
   position: absolute;
+}
+
+.priceAndDelete {
+  margin-top: 0;
 }

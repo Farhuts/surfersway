@@ -48,7 +48,7 @@ class Cart extends Component {
     let ordersInCart = myCart.userItemInCart
     console.log('myCart', myCart.userOrder)
     return (
-      <div className="shiftDown">
+      <div className="shiftDownCart">
         <ComponentForCart
           {...this.state}
           ordersInCart={ordersInCart}
