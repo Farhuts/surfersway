@@ -3,30 +3,21 @@ import React from 'react'
 const SocialMedia = () => {
   return (
     <div className="center" id="linkSocialMedia">
-      <a href="/auth/facebook">
-        <img
-          className="linkSocialMedia"
-          width="50"
-          height="50"
-          src="assets/002-facebook.png"
-        />
-      </a>
-      <a href="/auth/google">
-        <img
-          className="linkSocialMedia"
-          width="50"
-          height="50"
-          src="assets/google.png"
-        />
-      </a>
-      <a href="/auth/twitter">
-        <img
-          className="linkSocialMedia"
-          width="50"
-          height="50"
-          src="assets/001-twitter.png"
-        />
-      </a>
+      <div className="icon">
+        <a href="/auth/facebook">
+          <p className="iconP">f</p>
+        </a>
+      </div>
+      <div className="icon">
+        <a href="/auth/google">
+          <p className="iconP">G+</p>
+        </a>
+      </div>
+      <div className="icon">
+        <a href="/auth/twitter">
+          <p className="iconP">in</p>
+        </a>
+      </div>
     </div>
   )
 }

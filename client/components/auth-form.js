@@ -8,7 +8,7 @@ import SocialMedia from './authformComponents/socialMedia'
 class AuthForm extends Component {
   animate = evt => {
     if (evt.target.id === 'signup_btn') {
-      main.style.transform = 'translate(-140%, -50%)'
+      main.style.transform = 'translate(-146%, -50%)'
       main.style.transition = '1s'
 
       login.style.transform = 'translate(-180%, -50%)'
@@ -19,10 +19,10 @@ class AuthForm extends Component {
       signup.style.visibility = 'visible'
       signup.style.transition = '1.3s'
 
-      linkSocialMedia.style.transform = 'translate(55%, -50%)'
+      linkSocialMedia.style.transform = 'translate(145%, -50%)'
       linkSocialMedia.style.transition = '1.3s'
 
-      star.style.transform = 'translate(180%, -50%)'
+      star.style.transform = 'translate(980%, 1%)'
       star.style.transition = '2.3s'
     } else {
       main.style.transform = 'translate(-50%, -50%)'
@@ -33,13 +33,13 @@ class AuthForm extends Component {
       signup.style.transition = '0s'
 
       login.style.visibility = 'visible'
-      login.style.transform = 'translate(-48%, -50%)'
+      login.style.transform = 'translate(-45%, -50%)'
       login.style.transition = '1.3s'
 
       linkSocialMedia.style.transform = 'translate(1%, -50%)'
       linkSocialMedia.style.transition = '1.3s'
 
-      star.style.transform = 'translate(1%, 0%)'
+      star.style.transform = 'translate(1%, 1%)'
       star.style.transition = '2.3s'
     }
   }
